@@ -12,7 +12,8 @@
       </div>
 
       <div class="text-sm text-gray-500">{{ course.description }}</div>
-      <a href="{{ route('courses.show') }}" class="bg-indigo-500 text-white px-2 py-1 text-sm mt-3 rounded inline-block hover:bg-indigo-700">Voir la formation</a>
+      <a :href="'course/'  +  course.id  " class="bg-indigo-500 text-white px-2 py-1 text-sm mt-3 rounded inline-block hover:bg-indigo-700">Voir la formation</a>
+
       </div>
 
     </div>
@@ -20,15 +21,20 @@
 </template>
 
 <script>
+
+
 import AppLayout from '@/Layouts/AppLayout.vue'
 export default {
   components: { AppLayout },
+
+  props: ['courses'],
+
   data() {
     return {
       courseList: this.courses,
     }
   },
-  props: ['courses'],
+
 
   mounted() {
     console.log(this.courseList)

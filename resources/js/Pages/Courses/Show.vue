@@ -1,15 +1,61 @@
 <template>
-    <app-layout>
-    <h1>une formation</h1>
-    </app-layout>
+  <app-layout>
+    <template #header>
+      {{ course.title }}
+    </template>
+    <div class="py-3">
+
+      <div class="text-2xl text-gray-500">{{ course.episodes[this.currentKey].title }}</div>
+      <iframe
+        class="w-full"
+        h-screen
+        :src="course.episodes[0].video_url"
+        frameborder="100"
+        allowfullscreen
+      ></iframe>
+
+      <div class="text-sm text-gray-500">
+        {{ course.episodes[0].description }}
+      </div>
+      <div class="mt-6">
+      <ul v-for="(episode,index) in this.course.episodes " v-bind:key="episode.id">
+      <li class="mt-3">Episode n° {{ index + 1 }} - {{ episode.title }}
+      <button class="text-gray-500 focus:text-indigo-500 focus:outline-none" @click = "switchEpisode(index)"> Voir l'épisode</button>
+        </li>
+      </ul></div>
+    </div>
+  </app-layout>
 </template>
 
-  <script setup>
-  import AppLayout from '@/Layouts/AppLayout.vue'
-  export default {
-    mounted() {
-      console.log('hello')
-    }
-  }
+<script>
+import AppLayout from '@/Layouts/AppLayout.vue'
+export default {
+  components: { AppLayout },
 
-  </script>
+  props: ['course'],
+
+  data() {
+    return {
+      courseShow: this.course,
+      currentKey: 0,
+    }
+  },
+  methods: {
+    switchEpisode(index) {
+        this.currentKey = index;
+
+        window.scrollTo({
+            top:0,
+            left:0,
+            behavior: 'smooth'
+        }
+            );
+    },
+  },
+
+
+  mounted() {
+   //console.log(this.currentKey)
+  },
+}
+</script>
