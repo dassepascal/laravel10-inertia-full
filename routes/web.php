@@ -26,14 +26,23 @@ Route::get('/', function () {
 });
 
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return Inertia::render('Dashboard');
+//     })->name('dashboard');
+
+// });
+Route::get('/courses',[CourseController::class,'index'])->name('courses');
+Route::get('/courses/{id}',[CourseController::class,'show'])->name('courses.show');
+
+
+Route::group(['auth:sanctum', 'verified'], function () {
+    Route::get('/courses/{id}',[ControllerCourse::class,'show'])->name('courses.show');
+    Route::get('/dashboard', function (){
         return Inertia::render('Dashboard');
     })->name('dashboard');
-
 });
-Route::get('/courses',[CourseController::class,'index'])->name('courses');

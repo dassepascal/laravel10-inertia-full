@@ -28,7 +28,7 @@ protected $model = Episode::class;
     {
         return [
             'title' => $this->faker->sentence(),
-            'description' => $this->faker->paragraph(1),
+            'description' => $this->faker->text($maxNbChars = 200),
             'video_url' => 'mavideo.com'.rand(10,250),
             'course_id' => Course::all()->random()->id,
         ];
