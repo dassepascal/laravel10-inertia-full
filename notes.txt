@@ -1,1 +1,59 @@
 https://www.youtube.com/watch?v=_oa-VWqCuOQ&list=PLeeuvNW2FHVjrsrvuVZwyqNIyDvYNn33E&index=2
+
+composer require laravel/jetstream
+Factory:
+
+ php artisan make:factory CourseFactory --model=Course
+
+<template>
+  <app-layout>
+  <template #header>
+   liste des formations
+  </template>
+  <h1>coucou coucou</h1>
+  </app-layout>
+</template>
+
+<script >
+import AppLayout from '@/Layouts/AppLayout.vue'
+export default {
+components: { AppLayout },
+props:
+  ['courses'],
+
+},
+
+mounted(){
+    console.log(this.courses)
+},
+}
+</script>
+
+
+<template>
+  <app-layout>
+  <template #header>
+   liste des formations
+  </template>
+  <h1>coucou coucou</h1>
+  </app-layout>
+</template>
+
+<script >
+import AppLayout from '@/Layouts/AppLayout.vue'
+export default {
+components: { AppLayout },
+data(){
+  return {
+    courseList:this.courses
+  }
+},
+props:
+  ['courses'],
+
+mounted(){
+    console.log(this.courseList)
+},
+}
+</script>
+
