@@ -15,4 +15,8 @@ class Episode extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function user(){
+        return $this->belongsToMany(User::class,'completions','episode_id','user_id');
+    }
 }

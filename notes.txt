@@ -62,4 +62,5 @@ creation de la table
 php artisan make:migration create_completions_table
 Relation many to many
 
-
+function watched
+ //test status avec axios

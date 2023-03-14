@@ -4,8 +4,9 @@
       {{ course.title }}
     </template>
     <div class="py-3">
-
-      <div class="text-2xl text-gray-500">{{ course.episodes[this.currentKey].title }}</div>
+      <div class="text-2xl text-gray-500">
+        {{ course.episodes[this.currentKey].title }}
+      </div>
       <iframe
         class="w-full"
         h-screen
@@ -18,21 +19,38 @@
         {{ course.episodes[0].description }}
       </div>
       <div class="mt-6">
-      <ul v-for="(episode,index) in this.course.episodes " v-bind:key="episode.id">
-      <li class="mt-3">Episode n° {{ index + 1 }} - {{ episode.title }}
-      <button class="text-gray-500 focus:text-indigo-500 focus:outline-none" @click = "switchEpisode(index)"> Voir l'épisode</button>
-        </li>
-      </ul></div>
+        <ul
+          v-for="(episode, index) in this.course.episodes"
+          v-bind:key="episode.id"
+        >
+          <li class="mt-3 flex justify-between items-center">
+            <div>
+              Episode n° {{ index + 1 }} - {{ episode.title }}
+              <button
+                class="text-gray-500 focus:text-indigo-500 focus:outline-none"
+                @click="switchEpisode(index)"
+              >
+                Voir l'épisode
+              </button>
+            </div>
+            <progress-button
+             :episode-id="episode.id"
+             :watched-episodes="watched.episodes" />
+          </li>
+        </ul>
+      </div>
     </div>
   </app-layout>
 </template>
 
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue'
-export default {
-  components: { AppLayout },
+import ProgressButton from './ProgressButton.vue'
 
-  props: ['course'],
+export default {
+  components: { AppLayout, ProgressButton },
+
+  props: ['course','watched'],
 
   data() {
     return {
@@ -42,20 +60,18 @@ export default {
   },
   methods: {
     switchEpisode(index) {
-        this.currentKey = index;
+      this.currentKey = index
 
-        window.scrollTo({
-            top:0,
-            left:0,
-            behavior: 'smooth'
-        }
-            );
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      })
     },
   },
 
-
   mounted() {
-   //console.log(this.currentKey)
+    //console.log(this.currentKey)
   },
 }
 </script>
