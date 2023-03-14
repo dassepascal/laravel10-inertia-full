@@ -17,30 +17,34 @@
     },
 methods: {
     toggleProgress() {
-       // console.log('clic toggleProgress')
+        console.log('clic toggleProgress')
         axios.post('/toggleProgress', {
 
             episodeId: this.episodeId,
         })
         .then(response => {
+            console.log('ok')
            if(response.staus === 200) {
                this.isWatched = !this.isWatched;
+
            }
         })
         .catch(error => console.log(error))
     },
-    isWatchedEpisode(){
-        console.log('isWatchedEpisode',this.watchedEp)
 
-       // console.log( this.watchedEp.find(episode => episode.id === this.episodeId) ? 'true' : 'false');
+    isWatchedEpisode(){
+        //console.log('episode')
+
+        console.log( this.watchedEp.find(episode => episode.id === this.episodeId) ? 'true' : 'false');
         //return this.watchedEp.find(episode => episode.id === this.episodeId) ? true : false;
 
     }
 
     },
     mounted() {
-//this.isWatched = this.isWatchedEpisode();
-        console.log('mounted')
-    }
+        console.log('this.watchedEp')
+ this.isWatched = this.isWatchedEpisode();
+         console.log('mounted', this.isWatched)
+     }
  }
 </script>

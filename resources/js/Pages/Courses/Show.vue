@@ -35,7 +35,7 @@
             </div>
             <progress-button
              :episode-id="episode.id"
-             :watched-episodes="watched.episodes" />
+             :watched-episodes="watched" />
           </li>
         </ul>
       </div>
