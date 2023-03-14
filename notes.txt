@@ -64,3 +64,17 @@ Relation many to many
 
 function watched
  //test status avec axios
+
+Participants: on veut juste regader 1 seul
+dans CourseController
+ public function index()
+    {
+        $courses = Course::with('user')
+        ->select('courses.*',DB::raw)
+        ->withCount('episodes')->get();
+        //dd($courses);
+        return Inertia::render('Courses/Index', [
+            'courses' => $courses
+        ]);
+    }
+

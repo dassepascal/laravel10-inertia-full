@@ -24,7 +24,7 @@ methods: {
         })
         .then(response => {
             console.log('ok')
-           if(response.staus === 200) {
+           if(response.status === 200) {
                this.isWatched = !this.isWatched;
 
            }
