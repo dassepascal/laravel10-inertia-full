@@ -19,7 +19,7 @@
             {{ course.episodes_count }} épisodes
           </div>
         </div>
-        <test-component></test-component>
+    
         <div class="text-sm text-gray-500">{{ course.description }}</div>
         <a
           :href="'course/' + course.id"

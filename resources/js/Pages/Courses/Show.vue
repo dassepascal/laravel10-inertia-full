@@ -18,6 +18,13 @@
       <div class="text-sm text-gray-500">
         {{ course.episodes[0].description }}
       </div>
+      <div class="flex justify-center items-center py-6">
+        <progress-bar
+        :watched-episodes="watched"
+        :episodes="course.episodes"
+         />
+      </div>
+
       <div class="mt-6">
         <ul
           v-for="(episode, index) in this.course.episodes"
@@ -29,10 +36,12 @@
               <button
                 class="text-gray-500 focus:text-indigo-500 focus:outline-none"
                 @click="switchEpisode(index)"
+
               >
                 Voir l'épisode
               </button>
             </div>
+
             <progress-button
              :episode-id="episode.id"
              :watched-episodes="watched" />
@@ -46,9 +55,10 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue'
 import ProgressButton from './ProgressButton.vue'
+import ProgressBar from './ProgressBar.vue'
 
 export default {
-  components: { AppLayout, ProgressButton },
+  components: { AppLayout, ProgressButton, ProgressBar },
 
   props: ['course','watched'],
 

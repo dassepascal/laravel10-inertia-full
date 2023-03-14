@@ -78,3 +78,39 @@ dans CourseController
         ]);
     }
 
+
+create progressBar
+
+ensuite dans vue : import ProgressBar from './ProgressBar'
+
+components : ProgressBar
+
+dans template : <progress-bar></progress-bar>
+
+qu'est ce que je veux faire ?
+quand je clic sur progressButton ma progressbar change
+nombre episodes de la formation + episodes vue par le user
+
+recherche dans le controller dans la methode show
+'course' : les episodes
+'watched' : episode vue par user
+
+dans Show.vue:
+<progress-bar : watched-episodes = "watched" />
+
+on recupere ces informations dans ProgressBar : Props:['watchedEpisodes', 'episodes']
+
+utilisation des methodes computed
+pourquoi? cela rafraichi automatiquement la page
+
+   return Math.ceil(filteredEp.length / this.episodes.length * 100);
+
+eventBus
+
+dans app.js
+window.eventBus = new Vue();
+
+je vais pouvoir emettre un evenement et l'ecouter
+ProgressButton
+
+on veut mettre à jour watchedEpisodes

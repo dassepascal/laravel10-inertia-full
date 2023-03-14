@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
  export default {
     props: ['episodeId', 'watchedEpisodes'],
     data() {
@@ -26,6 +27,8 @@ methods: {
             console.log('ok')
            if(response.status === 200) {
                this.isWatched = !this.isWatched;
+               // quand je vais cliquer sur le bouton, je vais emettre un evenement et je vais passer en parametre la reponse de la requete
+               eventBus.$emit('toggleProgress', response.data);
 
            }
         })
@@ -35,16 +38,16 @@ methods: {
     isWatchedEpisode(){
         //console.log('episode')
 
-        console.log( this.watchedEp.find(episode => episode.id === this.episodeId) ? 'true' : 'false');
-        //return this.watchedEp.find(episode => episode.id === this.episodeId) ? true : false;
+       // console.log( this.watchedEp.find(episode => episode.id === this.episodeId) ? 'true' : 'false');
+        return this.watchedEp.find(episode => episode.id === this.episodeId) ? true : false;
 
     }
 
     },
     mounted() {
-        console.log('this.watchedEp')
+       // console.log('this.watchedEp')
  this.isWatched = this.isWatchedEpisode();
-         console.log('mounted', this.isWatched)
+        // console.log('mounted', this.isWatched)
      }
  }
 </script>
