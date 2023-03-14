@@ -1,6 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
 
+
+import eventBus from 'vue3-eventbus';
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -8,7 +10,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-window.eventBus = new Vue();
+
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -17,7 +19,8 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
-            .mount(el);
+            .mount(el)
+            .use(eventBus);
     },
     progress: {
         color: '#4B5563',

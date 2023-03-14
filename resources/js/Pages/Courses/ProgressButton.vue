@@ -8,6 +8,7 @@
 
 <script>
 
+import bus from 'vue3-eventbus'
  export default {
     props: ['episodeId', 'watchedEpisodes'],
     data() {
@@ -28,7 +29,7 @@ methods: {
            if(response.status === 200) {
                this.isWatched = !this.isWatched;
                // quand je vais cliquer sur le bouton, je vais emettre un evenement et je vais passer en parametre la reponse de la requete
-               eventBus.$emit('toggleProgress', response.data);
+               bus.emit('toggleProgress', response.data);
 
            }
         })

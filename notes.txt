@@ -114,3 +114,7 @@ je vais pouvoir emettre un evenement et l'ecouter
 ProgressButton
 
 on veut mettre à jour watchedEpisodes
+
+installation de Vue3-eventBus
+
+
