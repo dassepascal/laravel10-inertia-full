@@ -1,6 +1,39 @@
-<script setup>
+<script>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
+import {router} from "@inertiajs/vue3";
+import { reactive } from 'vue';
+
+const form = reactive({
+    title: null,
+    description: null,
+});
+
+
+export default {
+    components: {
+         AppLayout
+         },
+         data() {
+             return {
+                form:{
+                    title:this.title,
+                    description:this.description,
+                }
+             }
+         },
+         methods: {
+
+        submit() {
+
+            router.post('/courses', form)
+        }
+         }
+
+    }
+
+
+
+
 </script>
 
 <template>
@@ -14,19 +47,19 @@ import Welcome from '@/Components/Welcome.vue';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="w-full ">
-  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+  <form @submit.prevent="submit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
     Titre de la formation
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" >
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" v-model="form.title" >
     </div>
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
     Description de la formation
       </label>
-      <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text"  >
+      <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text"  v-model="form.description">
         </textarea>
     </div>
     <div class="flex items-center justify-between">

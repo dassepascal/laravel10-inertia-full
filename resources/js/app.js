@@ -2,7 +2,7 @@ import './bootstrap';
 import '../css/app.css';
 
 
-import eventBus from 'vue3-eventbus';
+
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -20,7 +20,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .mount(el)
-            .use(eventBus);
+      
     },
     progress: {
         color: '#4B5563',
