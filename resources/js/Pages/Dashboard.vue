@@ -18,9 +18,9 @@ export default {
             form,
             episodes: [
                 {
-                    // title: null,
-                    // description: null,
-                    // video_url: null,
+                    title: null,
+                    description: null,
+                    video_url: null,
 
                 },
             ],
@@ -69,7 +69,7 @@ export default {
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                                 Description de la formation
                             </label>
                             <textarea
@@ -83,9 +83,25 @@ export default {
                                 <label  class="block text-gray-700 text-sm font-bold mb-2" :for="'title-'+ index">
                                     Titre de l'episode n°{{ index + 1 }}
                                 </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" :id="'title -'+ index" v-model="episodes[index].title">
+                            </div>
 
+                            <div v-for="(episode, index) in episodes" v-bind:key="index">
+                                <label  class="block text-gray-700 text-sm font-bold mb-2" :for="'description-'+ index">
+                                    Description de l'episode n°{{ index + 1 }}
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" :id="'description -'+ index" v-model="episodes[index].description">
+                            </div>
+
+                            <div v-for="(episode, index) in episodes" v-bind:key="index">
+                                <label  class="block text-gray-700 text-sm font-bold mb-2" :for="'video_url-'+ index">
+                                    Url de l'episode n°{{ index + 1 }}
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" :id="'video_url -'+ index" v-model="episodes[index].video_url">
                             </div>
                         </div>
+
+
                         <div class="flex items-center justify-between">
                             <button
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
