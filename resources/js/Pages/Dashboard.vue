@@ -1,37 +1,42 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import {router} from "@inertiajs/vue3";
-import { reactive } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3';
 
-const form = reactive({
+const form = useForm({
     title: null,
     description: null,
 });
 
 
+
 export default {
     components: {
-         AppLayout
-         },
-         data() {
-             return {
-                form:{
-                    title:this.title,
-                    description:this.description,
-                }
-             }
-         },
-         methods: {
+        AppLayout
+    },
+    data() {
+        return {
+            form,
+            episodes: [
+                {
+                    // title: null,
+                    // description: null,
+                    // video_url: null,
 
-        submit() {
+                },
+            ],
 
-            router.post('/courses', form)
         }
-         }
+
+
+    },
+    methods: {
+        submit() {
+            form.post(route('courses.store'));
+        }
+
 
     }
-
-
+}
 
 
 </script>
@@ -46,33 +51,54 @@ export default {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <!-- message -->
+                <div v-if="$page.props.flash.message" class="bg-green-200 text-green-500 p-3 mb-8 text-center rounded ">
+                    {{ $page.props.flash.message }}
+                </div>
+
                 <div class="w-full ">
-  <form @submit.prevent="submit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <form @submit.prevent="submit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-    Titre de la formation
-      </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" v-model="form.title" >
-    </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
-    Description de la formation
-      </label>
-      <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text"  v-model="form.description">
-        </textarea>
-    </div>
-    <div class="flex items-center justify-between">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-        Créer ma formation
-      </button>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Titre de la formation
+                            </label>
+                            <input
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="title" type="text" v-model="form.title">
+                        </div>
 
-    </div>
-  </form>
-  <p class="text-center text-gray-500 text-xs">
-    &copy;2020 Acme Corp. All rights reserved.
-  </p>
-</div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+                                Description de la formation
+                            </label>
+                            <textarea
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="description" type="text" v-model="form.description"></textarea>
+
+                        </div>
+                        <div class="mb-4">
+                            <h2 class="text-2xl">Episodes de la formation</h2>
+                            <div v-for="(episode, index) in episodes" v-bind:key="index">
+                                <label  class="block text-gray-700 text-sm font-bold mb-2" :for="'title-'+ index">
+                                    Titre de l'episode n°{{ index + 1 }}
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                type="submit">
+                                Créer ma formation
+                            </button>
+
+                        </div>
+                    </form>
+                    <p class="text-center text-gray-500 text-xs">
+                        &copy;2020 Acme Corp. All rights reserved.
+                    </p>
+                </div>
             </div>
         </div>
     </AppLayout>
