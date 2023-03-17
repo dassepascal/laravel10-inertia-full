@@ -14,6 +14,7 @@ export default {
         AppLayout
     },
     data() {
+        console.log('episodes', form);
         return {
             form,
             episodes: [
@@ -24,6 +25,7 @@ export default {
 
                 },
             ],
+
 
         }
 
@@ -39,6 +41,9 @@ export default {
                 description: null,
                 video_url: null,
             })
+        },
+        remove() {
+            this.episodes.pop();
         }
 
 
@@ -108,9 +113,9 @@ export default {
                             </div>
                         </div>
                         <!-- ne pas oublier le prevent sinon le formulaire va être renvoyer à chaqu fois -->
-                        <button class="bg-green-600 rounded py-4 px-4 my-2 text-white  block" @click.prevent="add"> +
+                        <button class="bg-green-600 rounded py-4 px-4 my-2 text-white  block" v-if="episodes.length < 15" @click.prevent="add">+
                         </button>
-
+                        <button class="bg-red-600 rounded py-4 px-4 my-2 text-white  block" v-if="episodes.length > 1" @click.prevent="remove">    🗑️                     </button>
 
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

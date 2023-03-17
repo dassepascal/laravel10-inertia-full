@@ -135,4 +135,5 @@ class HandleInertiaRequests extends Middleware
 
 creation episodes
 
-
+remove
+corbeil lien : https://emojipedia.org/fr/corbeille-%C3%A0-papiers/

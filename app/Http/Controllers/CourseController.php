@@ -22,7 +22,7 @@ class CourseController extends Controller
                )AS participants'
         ))
         ->withCount('episodes')->latest()->get();//pour obtenir les dernireres formations
-        //dd($courses);
+        dd($courses);
         return Inertia::render('Courses/Index', [
             'courses' => $courses
         ]);
@@ -42,11 +42,11 @@ class CourseController extends Controller
         {
             //champ user_id
             //pb:de masse assignment on user_id title et description
-
+            dd($request->input('episodes'));
             Course::create($request->all());
             return redirect()->route('dashboard')->with('message', 'Formation ajoutée avec succès');
 
-            
+
         }
 
         public function toggleProgress(Request $request)
