@@ -92,19 +92,19 @@ export default {
                                 </label>
                                 <input
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    type="text" :id="'title -' + index" v-model="episodes[index].title">
+                                    type="text" :id="'title -' + index" v-model="form.episodes[index].title">
                                     <label class="block text-gray-700 text-sm font-bold mb-2" :for="'description-' + index">
                                         Description de l'episode n°{{ index + 1 }}
                                     </label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        type="text" :id="'description -' + index" v-model="episodes[index].description">
+                                        type="text" :id="'description -' + index" v-model="form.episodes[index].description">
                                     <label class="block text-gray-700 text-sm font-bold mb-2" :for="'video_url-' + index">
                                         Url de l'episode n°{{ index + 1 }}
                                     </label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-5"
-                                        type="text" :id="'video_url -' + index" v-model="episodes[index].video_url">
+                                        type="text" :id="'video_url -' + index" v-model="form.episodes[index].video_url">
                             </div>
                         </div>
                         <!-- ne pas oublier le prevent sinon le formulaire va être renvoyer à chaqu fois -->

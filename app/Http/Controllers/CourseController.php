@@ -43,10 +43,10 @@ class CourseController extends Controller
             //champ user_id
             //pb:de masse assignment on user_id title et description
 
-            Course::create($request->all());
+            Course::create($request->input('episodes'));
             return redirect()->route('dashboard')->with('message', 'Formation ajoutée avec succès');
 
-            
+
         }
 
         public function toggleProgress(Request $request)
