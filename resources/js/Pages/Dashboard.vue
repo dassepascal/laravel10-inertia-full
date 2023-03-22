@@ -80,7 +80,7 @@ export default {
                                 id="title" type="text" v-model="form.title">
                         </div>
 
-                        <div class="mb-4">
+
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                                 Description de la formation
                             </label>
@@ -88,10 +88,10 @@ export default {
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="description" type="text" v-model="form.description"></textarea>
 
-                        </div>
+
                         <div class="mb-4">
                             <h2 class="text-2xl">Episodes de la formation</h2>
-                            <div v-for="(episode, index) in episodes" v-bind:key="index">
+                            <div v-for="(episode, index) in episodes  " v-bind:key="index">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" :for="'title-' + index">
                                     Titre de l'episode n°{{ index + 1 }}
                                 </label>
