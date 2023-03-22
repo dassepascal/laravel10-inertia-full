@@ -53,8 +53,10 @@ props:{
     methods: {
         submit,
         add() {
+            console.log('add', this.form.episodes)
 
             this.form.episodes.push({
+
                 title: null,
                 description: null,
                 video_url: null,
@@ -131,7 +133,7 @@ props:{
                                     </label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
-                                        type="text" :id="'video_url -' + index" v-model="episodes[index].video_url">
+                                        type="text" :id="'video_url -' + index" v-model="form.episodes[index].video_url">
                                         <div  class="bg-red-200 text-red-500 p-1 mt-1 text-center rounded " v-if="errors['episodes.' + index + '.video_url']">{{errors['episodes.' + index + '.video_url'] }}</div>
                             </div>
                         </div>
