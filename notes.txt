@@ -135,4 +135,11 @@ class HandleInertiaRequests extends Middleware
 
 creation episodes
 
+remove
+corbeil lien : https://emojipedia.org/fr/corbeille-%C3%A0-papiers/
 
+
+Model courses
+pb assignement de masse
+protected $fillable = ['title','description']
+cette formation appartien a l'utilisateur connecte on est oblige de remplir un champ user_id, on ne le recupere pas depuis le request

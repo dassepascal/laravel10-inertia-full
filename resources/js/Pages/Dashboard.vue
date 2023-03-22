@@ -1,19 +1,39 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { router } from '@inertiajs/vue3';
+import { reactive } from 'vue';
 
-const form = useForm({
+//  defineProps({errors:Object});
+
+
+const form = reactive({
     title: null,
     description: null,
+    episodes: [
+                {
+                    title: null,
+                    description: null,
+                    video_url: null
+
+                },
+            ],
+
 });
 
-
+function submit() {
+    router.post('/courses',form);
+}
 
 export default {
+props:{
+    errors:Object,
+},
+
     components: {
         AppLayout
     },
     data() {
+        console.log('episodes', form);
         return {
             form,
             episodes: [
@@ -25,20 +45,26 @@ export default {
                 },
             ],
 
+
         }
 
 
     },
     methods: {
-        submit() {
-            form.post(route('courses.store'));
-        },
+        submit,
         add() {
-            this.episodes.push({
+            console.log('add', this.form.episodes)
+
+            this.form.episodes.push({
+
                 title: null,
                 description: null,
                 video_url: null,
             })
+        },
+        remove() {
+
+            this.form.episodes.pop();
         }
 
 
@@ -73,44 +99,48 @@ export default {
                             <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="title" type="text" v-model="form.title">
+                                <div class="bg-red-200 text-red-500 p-1 mt-1 text-center rounded " v-if="errors.title">{{ errors.title }}</div>
                         </div>
 
-                        <div class="mb-4">
+
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                                 Description de la formation
                             </label>
                             <textarea
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="description" type="text" v-model="form.description"></textarea>
+                                <div class="bg-red-200 text-red-500 p-1 mt-1 text-center rounded "  v-if="errors.description">{{ errors.description }}</div>
 
-                        </div>
                         <div class="mb-4">
                             <h2 class="text-2xl">Episodes de la formation</h2>
-                            <div v-for="(episode, index) in episodes" v-bind:key="index">
+                            <div v-for="(episode, index) in this.form.episodes  " v-bind:key="index">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" :for="'title-' + index">
                                     Titre de l'episode n°{{ index + 1 }}
                                 </label>
                                 <input
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     type="text" :id="'title -' + index" v-model="form.episodes[index].title">
+                                    <div class="bg-red-200 text-red-500 p-1 mt-1 text-center rounded " v-if="errors['episodes.'+index+'.title']">{{ errors['episodes.'+index+'.title'] }}</div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2" :for="'description-' + index">
                                         Description de l'episode n°{{ index + 1 }}
                                     </label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         type="text" :id="'description -' + index" v-model="form.episodes[index].description">
+                                        <div class="bg-red-200 text-red-500 p-1 mt-1 text-center rounded " v-if="errors['episodes.'+index+'.description']">{{ errors['episodes.'+index+'.description'] }}</div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2" :for="'video_url-' + index">
                                         Url de l'episode n°{{ index + 1 }}
                                     </label>
                                     <input
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-5"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
                                         type="text" :id="'video_url -' + index" v-model="form.episodes[index].video_url">
+                                        <div  class="bg-red-200 text-red-500 p-1 mt-1 text-center rounded " v-if="errors['episodes.' + index + '.video_url']">{{errors['episodes.' + index + '.video_url'] }}</div>
                             </div>
                         </div>
                         <!-- ne pas oublier le prevent sinon le formulaire va être renvoyer à chaqu fois -->
-                        <button class="bg-green-600 rounded py-4 px-4 my-2 text-white  block" @click.prevent="add"> +
+                        <button class="bg-green-600 rounded py-4 px-4 my-2 text-white  block" v-if="form.episodes.length < 15" @click.prevent="add">+
                         </button>
-
+                        <button class="bg-red-600 rounded py-4 px-4 my-2 text-white  block" v-if="form.episodes.length > 1" @click.prevent="remove">    🗑️                     </button>
 
                         <button
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

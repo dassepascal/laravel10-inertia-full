@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Course;
+use App\Models\Episode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class CourseController extends Controller
 {
+// message error
+
+
+
     public function index()
     {
         $courses = Course::with('user')
@@ -22,7 +27,7 @@ class CourseController extends Controller
                )AS participants'
         ))
         ->withCount('episodes')->latest()->get();//pour obtenir les dernireres formations
-        //dd($courses);
+        // dd($courses);
         return Inertia::render('Courses/Index', [
             'courses' => $courses
         ]);
@@ -38,15 +43,28 @@ class CourseController extends Controller
             ]);
         }
 
-        public function store(Request $request)
+        public function store(Request $request) //pour ajouter une formation
         {
             //champ user_id
             //pb:de masse assignment on user_id title et description
+           // dans $course on recupere le champ course_id
+//creation des episodes liés à une formation
+$request->validate([
+    'title' => 'required',
+    'description' => 'required',
+    'episodes' => ['required','array'],
+    'episodes.*.title' => 'required',
+    'episodes.*.description' => 'required',
+    'episodes.*.video_url' => 'required',
 
-            Course::create($request->input('episodes'));
-            return redirect()->route('dashboard')->with('message', 'Formation ajoutée avec succès');
+]);
+            $course =Course::create($request->all());
 
-
+            foreach ($request->input('episodes') as $episode) {
+                $episode['course_id'] = $course->id;
+                Episode::create($episode);
+            }
+            return to_route('dashboard')->with('message', 'Formation ajoutée avec succès');
         }
 
         public function toggleProgress(Request $request)
