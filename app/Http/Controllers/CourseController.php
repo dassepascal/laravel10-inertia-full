@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Redirect;
 
 class CourseController extends Controller
 {
+// message error
+
+
+
     public function index()
     {
         $courses = Course::with('user')
@@ -45,6 +49,15 @@ class CourseController extends Controller
             //pb:de masse assignment on user_id title et description
            // dans $course on recupere le champ course_id
 //creation des episodes liés à une formation
+$request->validate([
+    'title' => 'required',
+    'description' => 'required',
+    'episodes' => ['required','array'],
+    'episodes.*.title' => 'required',
+    'episodes.*.description' => 'required',
+    'episodes.*.video_url' => 'required',
+
+]);
             $course =Course::create($request->all());
 
             foreach ($request->input('episodes') as $episode) {
