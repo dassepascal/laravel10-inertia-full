@@ -57,6 +57,11 @@ const logout = () => {
                                     Les formations
                                 </NavLink>
                             </div>
+                            <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('courses.edit')" :active="route().current('courses.edit')">
+                                    La formation
+                                </NavLink>
+                            </div> -->
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -205,7 +210,11 @@ const logout = () => {
                             Les Formations
                         </ResponsiveNavLink>
                     </div>
-
+                    <!-- <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('courses.edit')" :active="route().current('courses.edit')">
+                            La Formation
+                        </ResponsiveNavLink>
+                    </div> -->
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="flex items-center px-4">
