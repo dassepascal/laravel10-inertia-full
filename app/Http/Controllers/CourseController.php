@@ -9,6 +9,7 @@ use App\Models\Episode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Termwind\Components\Dd;
 
 class CourseController extends Controller
 {
@@ -37,6 +38,8 @@ class CourseController extends Controller
         {
             $course = Course::where('id', $id)->with('episodes')->first();
             $watched = auth()->user()->episodes;
+            // dd($course);
+            // dd($watched);
             return Inertia::render('Courses/Show', [
                 'course' => $course,
                 'watched' => $watched,
@@ -81,16 +84,42 @@ class CourseController extends Controller
         {
 
             $course = Course::where('id', $id)->with('episodes')->first();
-            // $this->authorize('update', $course);
+
+             //$this->authorize('update', $course);
             return Inertia::render('Courses/Edit', [
                 'course' => $course,
             ]);
         }
-        public function update(Request $request, int $id){
+        // public function update(Request $request, $id){
 
-            dd($request->all());
+        //     dd($request->all());
+        //     $course = Course::where('id', $id)->with('episodes')->first();
+        //     $course->update($request->all());
+        //     return to_route('dashboard')->with('message', 'Formation modifiée avec succès');
+        // }
+
+        public function update(Request $request,int $id)
+        {
+
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+                'episodes' => ['required','array'],
+                'episodes.*.title' => 'required',
+                'episodes.*.description' => 'required',
+                'episodes.*.video_url' => 'required',
+
+            ]);
             $course = Course::where('id', $id)->with('episodes')->first();
-            $course->update($request->all());
+
+             $course->update($request->all());
+             $course->episodes()->delete();
+            foreach ($request->input('episodes') as $episode) {
+                $episode['course_id'] = $course->id;
+                Episode::create($episode);
+            }
+
             return to_route('dashboard')->with('message', 'Formation modifiée avec succès');
         }
-}
+
+    }

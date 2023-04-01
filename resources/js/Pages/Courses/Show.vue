@@ -10,13 +10,13 @@
       <iframe
         class="w-full"
         h-screen
-        :src="course.episodes[0].video_url"
+        :src="course.episodes[this.currentKey].video_url"
         frameborder="100"
         allowfullscreen
       ></iframe>
 
       <div class="text-sm text-gray-500">
-        {{ course.episodes[0].description }}
+        {{ course.episodes[this.currentKey].description }}
       </div>
       <div class="flex justify-center items-center py-6">
         <progress-bar
@@ -70,6 +70,7 @@ export default {
   },
   methods: {
     switchEpisode(index) {
+        console.log(index)
       this.currentKey = index
 
       window.scrollTo({

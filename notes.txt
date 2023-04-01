@@ -147,3 +147,7 @@ cette formation appartien a l'utilisateur connecte on est oblige de remplir un c
 
 edit
 pb affichage des messages errors
+
+resoud pb edit formations
+
+bouton edit

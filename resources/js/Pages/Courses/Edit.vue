@@ -12,13 +12,18 @@ const courseData = reactive({
     episodes: [
         {
             title: null,
-            description: null,
-            video_url: null
+            description:null,
+            video_url: null,
 
         },
     ],
 
-});
+})
+// function submit(){
+//     router.patch('/courses/' + courseData.id,courseData);
+// }
+
+console.log(courseData)
 
 // function submit() {
 //     router.patch('/courses/' + this.courseData.id,this.courseData);
@@ -32,30 +37,17 @@ export default {
 
 
 
-
-
-
-
-
-
-
-
     components: {
         AppLayout
     },
     data() {
-        console.log('course', courseData)
+
         return {
             //courseData est un nouveau objet qui contient les données de course
             courseData: this.course,
-            episodes: [
-                {
-                    title: this.course.title,
-                    description: null,
-                    video_url: null,
 
-                },
-            ],
+
+
 
         }
 
@@ -63,9 +55,13 @@ export default {
     },
     methods: {
         submit() {
-            router.patch('/courses/' + courseData.id, courseData);
+            console.log('submit')
+            router.patch('/courses/' + this.courseData.id, this.courseData);
         },
+
+
         add() {
+            console.log('+')
             this.courseData.episodes.push({
                 title: null,
                 description: null,
@@ -73,12 +69,14 @@ export default {
             })
         },
         remove() {
+            console.log('-')
 
             this.courseData.episodes.pop();
         }
 
 
     }
+
 }
 
 
@@ -99,7 +97,7 @@ export default {
                 </div>
                 <div class="w-full ">
                     <form @submit.prevent="submit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                  
+
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Titre de la formation
