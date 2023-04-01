@@ -143,3 +143,7 @@ Model courses
 pb assignement de masse
 protected $fillable = ['title','description']
 cette formation appartien a l'utilisateur connecte on est oblige de remplir un champ user_id, on ne le recupere pas depuis le request
+
+
+edit
+pb affichage des messages errors

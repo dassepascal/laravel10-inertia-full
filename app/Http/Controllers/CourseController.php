@@ -79,10 +79,18 @@ class CourseController extends Controller
         }
         public function edit(int $id)
         {
-            
+
             $course = Course::where('id', $id)->with('episodes')->first();
+            // $this->authorize('update', $course);
             return Inertia::render('Courses/Edit', [
                 'course' => $course,
             ]);
+        }
+        public function update(Request $request, int $id){
+
+            dd($request->all());
+            $course = Course::where('id', $id)->with('episodes')->first();
+            $course->update($request->all());
+            return to_route('dashboard')->with('message', 'Formation modifiée avec succès');
         }
 }

@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 
-//  defineProps({errors:Object});
+//   defineProps({errors:Object});
 
 
 const courseData = reactive({
@@ -20,16 +20,25 @@ const courseData = reactive({
 
 });
 
-function submit() {
-    router.patch('/courses/' + courseData.id,this.courseData);
-}
+// function submit() {
+//     router.patch('/courses/' + this.courseData.id,this.courseData);
+// }
+
 
 export default {
-    props: ['course'],
+    props:
+        // errors:{type :Object,}
+        ['course'],
 
-    // {
-    //     errors: Object,
-    // },
+
+
+
+
+
+
+
+
+
 
     components: {
         AppLayout
@@ -53,7 +62,9 @@ export default {
 
     },
     methods: {
-        submit,
+        submit() {
+            router.patch('/courses/' + courseData.id, courseData);
+        },
         add() {
             this.courseData.episodes.push({
                 title: null,
@@ -88,6 +99,7 @@ export default {
                 </div>
                 <div class="w-full ">
                     <form @submit.prevent="submit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                  
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                                 Titre de la formation
@@ -96,6 +108,7 @@ export default {
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="title" type="text" v-model="courseData.title">
                         </div>
+                        <!-- todo message errors -->
                         <!-- <div class="bg-red-200 text-red-500 p-1 mt-1 text-center rounded " v-if="errors.title">{{ errors.title }} </div> -->
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                             Description de la formation

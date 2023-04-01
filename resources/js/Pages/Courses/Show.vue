@@ -52,7 +52,7 @@
   </app-layout>
 </template>
 
-<script>
+<script >
 import AppLayout from '@/Layouts/AppLayout.vue'
 import ProgressButton from './ProgressButton.vue'
 import ProgressBar from './ProgressBar.vue'
