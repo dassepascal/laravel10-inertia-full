@@ -84,7 +84,7 @@ class CourseController extends Controller
         {
 
             $course = Course::where('id', $id)->with('episodes')->first();
-
+            $this->authorize('update', $course);
              //$this->authorize('update', $course);
             return Inertia::render('Courses/Edit', [
                 'course' => $course,
@@ -111,7 +111,7 @@ class CourseController extends Controller
 
             ]);
             $course = Course::where('id', $id)->with('episodes')->first();
-
+                $this->authorize('update', $course);
              $course->update($request->all());
              $course->episodes()->delete();
             foreach ($request->input('episodes') as $episode) {
@@ -119,7 +119,7 @@ class CourseController extends Controller
                 Episode::create($episode);
             }
 
-            return to_route('dashboard')->with('message', 'Formation modifiée avec succès');
+            return to_route('courses')->with('message', 'Formation modifiée avec succès');
         }
 
     }

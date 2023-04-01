@@ -27,6 +27,14 @@
         >
           Voir la formation
         </a>
+       <div class="flex items-center justify-between">
+        <a
+          :href="'courses/edit/' + course.id"
+          v-if="course.update"
+          class="bg-gray-500 text-white px-2 py-1 text-sm mt-3 rounded inline-block hover:bg-gray-700"
+        >
+        edit
+        </a></div>
       </div>
     </div>
   </app-layout>
