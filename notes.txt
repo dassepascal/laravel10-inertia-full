@@ -283,7 +283,7 @@ dans store de Course  public function store(Request $request, YoutubeServices $y
         dans AppServiceProvider:
         on fait un $this->app pour recuperer l'application en cours
         singleton pour 1 seule instance de youtube
-        je renvoie une closure on lui passe la cle 
+        je renvoie une closure on lui passe la cle
 
          public function boot(): void
     {
@@ -291,4 +291,52 @@ dans store de Course  public function store(Request $request, YoutubeServices $y
             return new YoutubeServices(env('YOUTUBE_API_KEY'));
         });
     }
+
+
+duration
+url utilise pour le test: https://www.youtube.com/watch?v=j-_WrFxbpnQ&t=13s
+//preg_match('/embed\/(.+)/',$video_url,$matches );
+preg_match('/v=([a-zA-Z0-9_-]+)/', $video_url, $matches);
+dd($video_url,$matches);
+resultat:
+"https://www.youtube.com/watch?v=j-_WrFxbpnQ&t=13s" // app\Youtube\YoutubeServices.php:24
+
+array:2 [▼ // app\Youtube\YoutubeServices.php:24
+  0 => "v=j-_WrFxbpnQ"
+  1 => "j-_WrFxbpnQ" // correspond à id
+]
+
+pour obtenir la duree de la video :
+ preg_match('/v=([a-zA-Z0-9_-]+)/', $video_url, $matches);
+ $response = Http::get('https://www.googleapis.com/youtube/v3/videos?key=AIzaSyDzA_w7U_77ZBny9ZwrkCFrivhA3ePEz8c&id=j-_WrFxbpnQ&t=6s&part=contentDetails');
+  $decoded = json_decode($response);
+        dd($decoded->items[0]->contentDetails->duration);
+
+pour afficher le temps en seconde
+
+$interval = new DateInterval($duration);
+
+        return $interval->s + $interval->i * 60 + $interval->h * 3600;
+
+pour ajouter une colonne dans CourseController/ methode index
+
+pour convertir les secondes en HandleInertiaRequests
+nouvelle méthode
+
+dans index.vue :<span class="font-semibold text-gray-500">{{ convert(course.total_duration) }}</span>
+
+methods:{
+
+    convert(timestamps) {
+     let hours = Math.floor( timestamps / 3600);
+     let minutes =Math.floor( (timestamps /60) - (hours /60));
+     let seconds = timestamps % 60;
+
+     return hours + ':' +minutes + ':' + seconds;
+    }
+  },
+
+  astuce pour affichage de l'heure
+
+return hours.toString().padStart(2,0) + ':' +minutes.toString().padStart(2,0) + ':' + seconds.toString().padStart(2,0);
 

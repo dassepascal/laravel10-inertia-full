@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->singleton('App\Youtube\YoutubeServices', function () {
+            // dd('hello', env('YOUTUBE_API_KEY'));
             return new YoutubeServices(env('YOUTUBE_API_KEY'));
         });
     }

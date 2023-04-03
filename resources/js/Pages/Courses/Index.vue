@@ -19,7 +19,7 @@
             {{ course.episodes_count }} épisodes
           </div>
         </div>
-
+<span class="font-semibold text-gray-500">{{ convert(course.total_duration) }}</span>
         <div class="text-sm text-gray-500">{{ course.description }}</div>
         <a
           :href="'course/' + course.id"
@@ -47,6 +47,17 @@ export default {
   components: { AppLayout },
 
   props: ['courses'],
+
+  methods:{
+
+    convert(timestamps) {
+     let hours = Math.floor( timestamps / 3600);
+     let minutes =Math.floor( (timestamps /60) - (hours /60));
+     let seconds = timestamps % 60;
+
+     return hours.toString().padStart(2,0) + ':' +minutes.toString().padStart(2,0) + ':' + seconds.toString().padStart(2,0);
+    }
+  },
 
   data() {
     return {
