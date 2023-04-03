@@ -6,8 +6,10 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Course;
 use App\Models\Episode;
+use App\Youtube\YoutubeServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Termwind\Components\Dd;
 
@@ -19,6 +21,10 @@ class CourseController extends Controller
 
     public function index()
     {
+
+
+
+
         $courses = Course::with('user')
         ->select('courses.*', DB::raw(
             '(SELECT COUNT(DISTINCT(user_id))
@@ -46,8 +52,10 @@ class CourseController extends Controller
             ]);
         }
 
-        public function store(Request $request) //pour ajouter une formation
+        public function store(Request $request, YoutubeServices $ytb) //pour ajouter une formation
         {
+
+
             //champ user_id
             //pb:de masse assignment on user_id title et description
             // dans $course on recupere le champ course_id
@@ -65,6 +73,8 @@ class CourseController extends Controller
 
             foreach ($request->input('episodes') as $episode) {
                 $episode['course_id'] = $course->id;
+                $episode['duration'] = $ytb->handleYoutubeVideoDuration($episode['video_url']);
+//dd($episode['duration']);
                 Episode::create($episode);
             }
             return to_route('dashboard')->with('message', 'Formation ajoutée avec succès');

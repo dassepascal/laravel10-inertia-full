@@ -210,5 +210,85 @@ Dans AuthServiceProvider
     avec ce code si tu es l'editeur du vois le button edit sinon pas de button
 
 
+Affichage de la duree de la video de youtube
 
+https://console.cloud.google.com/apis/dashboard?pli=1&project=world-bucket-list-342715
+
+
+url api : https://www.googleapis.com/youtube/v3/videos?key=AIzaSyDzA_w7U_77ZBny9ZwrkCFrivhA3ePEz8c&id=j-_WrFxbpnQ&t=6s&part=contentDetails
+
+dans
+CourseController
+methode index
+dd($response->json());
+
+array:4 [▼ // app\Http\Controllers\CourseController.php:25
+  "kind" => "youtube#videoListResponse"
+  "etag" => "ePh7pJ6UWl0SnsvHfk3MbXrAxqc"
+  "items" => array:1 [▼
+    0 => array:4 [▼
+      "kind" => "youtube#video"
+      "etag" => "91ZFBH7_RC3ukoE-g-ytNhdkhwM"
+      "id" => "j-_WrFxbpnQ"
+      "contentDetails" => array:7 [▼
+        "duration" => "PT16M44S"
+        "dimension" => "2d"
+        "definition" => "hd"
+        "caption" => "true"
+        "licensedContent" => true
+        "contentRating" => []
+        "projection" => "rectangular"
+      ]
+    ]
+  ]
+  "pageInfo" => array:2 [▶]
+]
+
+modifier la table episode
+php artisan make:migration add_duration_to_episodes_table --table=episodes
+
+Episode.php
+mettre 'duration'
+   protected $fillable = ['title', 'description', 'video_url', 'course_id','duration'];
+
+creation d'un dossier Youtube dans app
+
+chemin pour recupere la duration
+items[0]->contentDetails->duration
+
+dans store de Course  public function store(Request $request, YoutubeServices $ytb) //pour ajouter une formation
+        {
+            //champ user_id
+            //pb:de masse assignment on user_id title et description
+            // dans $course on recupere le champ course_id
+            //creation des episodes liés à une formation
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+                'episodes' => ['required','array'],
+                'episodes.*.title' => 'required',
+                'episodes.*.description' => 'required',
+                'episodes.*.video_url' => 'required',
+
+            ]);
+            $course =Course::create($request->all());
+
+            foreach ($request->input('episodes') as $episode) {
+                $episode['course_id'] = $course->id;
+                Episode::create($episode);
+            }
+            return to_route('dashboard')->with('message', 'Formation ajoutée avec succès');
+        }
+
+        dans AppServiceProvider:
+        on fait un $this->app pour recuperer l'application en cours
+        singleton pour 1 seule instance de youtube
+        je renvoie une closure on lui passe la cle 
+
+         public function boot(): void
+    {
+        $this->app->singleton('App\Youtube\YoutubeServices', function () {
+            return new YoutubeServices(env('YOUTUBE_API_KEY'));
+        });
+    }
 
