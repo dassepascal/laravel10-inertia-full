@@ -3,7 +3,7 @@
     <template #header>
       liste des formations 2021
     </template>
-    <div class="py-3" v-for="course in this.courseList" v-bind:key="course.id">
+    <div class="py-3" v-for="course in courseList.data" v-bind:key="course.id">
 
       <div class="text-sm text-gray-500">
         Mise en ligne par: {{ course.user.name }} -
@@ -34,8 +34,28 @@
           class="bg-gray-500 text-white px-2 py-1 text-sm mt-3 rounded inline-block hover:bg-gray-700"
         >
         edit
-        </a></div>
+        </a>
+        </div>
       </div>
+
+    </div>
+    <div >
+    <!-- pagination -->
+<div class="mt-6 ml-6">
+
+<Link
+    v-for=" link in courses.links"
+    v-bind:key="link.label"
+    :href="link.url"
+
+    class="bg-indigo-500 text-white px-2 py-1 text-sm mt-3 rounded inline-block hover:bg-indigo-700"
+    >{{ link.label }}</Link>
+
+
+
+
+</div>
+
     </div>
   </app-layout>
 </template>
@@ -43,10 +63,17 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue'
 
-export default {
-  components: { AppLayout },
+ import {Link} from '@inertiajs/vue3'
 
-  props: ['courses'],
+
+
+export default {
+  components: { AppLayout, Link },
+
+  props: {
+    courses: Object,
+    links: Array,
+  },
 
   data() {
     return {

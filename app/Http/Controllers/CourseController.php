@@ -33,7 +33,7 @@ class CourseController extends Controller
                WHERE episodes.course_id = courses.id
                )AS participants'
         ))
-        ->withCount('episodes')->latest()->get();//pour obtenir les dernireres formations
+        ->withCount('episodes')->latest()->paginate(5);//pour obtenir les dernireres formations
         // dd($courses);
         return Inertia::render('Courses/Index', [
             'courses' => $courses
