@@ -33,8 +33,8 @@ class CourseController extends Controller
 
                 ) AS total_duration'
         ))
-        ->withCount('episodes')->latest()->get();//pour obtenir les dernireres formations
-   
+        ->withCount('episodes')->latest()->paginate(5);//pour obtenir les dernireres formations
+        // dd($courses);
         return Inertia::render('Courses/Index', [
             'courses' => $courses
         ]);
